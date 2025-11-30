@@ -1,3 +1,4 @@
+import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/result/result.dart';
 import '../../domain/entities/character.dart';
@@ -23,11 +24,21 @@ class CharacterRepositoryImpl implements CharacterRepository {
         limit: limit,
       );
       
-      final characters = (response['items'] as List)
+      final items = response['items'];
+      if (items == null || items is! List) {
+        return Result.success(<Character>[]);
+      }
+      
+      final characters = items
+          .where((json) => json != null)
           .map((json) => CharacterModel.fromJson(json).toEntity())
           .toList();
       
       return Result.success(characters);
+    } on ServerException catch (e) {
+      return Result.error(ServerFailure(e.message));
+    } on NetworkException catch (e) {
+      return Result.error(NetworkFailure(e.message));
     } on Exception catch (e) {
       return Result.error(ServerFailure(e.toString()));
     }
@@ -40,6 +51,10 @@ class CharacterRepositoryImpl implements CharacterRepository {
       final characterDetail = CharacterDetailModel.fromJson(response).toEntity();
       
       return Result.success(characterDetail);
+    } on ServerException catch (e) {
+      return Result.error(ServerFailure(e.message));
+    } on NetworkException catch (e) {
+      return Result.error(NetworkFailure(e.message));
     } on Exception catch (e) {
       return Result.error(ServerFailure(e.toString()));
     }
