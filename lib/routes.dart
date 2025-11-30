@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'features/characters/presentation/screens/character_list_screen.dart';
-import 'features/characters/presentation/screens/character_detail_screen.dart';
+import 'features/characters/presentation/ui/character_list_screen.dart';
+import 'features/characters/presentation/ui/character_detail_screen.dart';
 
 class AppRoutes {
   static const String home = '/';
