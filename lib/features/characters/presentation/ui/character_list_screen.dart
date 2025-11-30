@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
+import '../../../../core/widgets/dragonball_loader.dart';
 import '../../../../injection_container.dart';
 import '../../../../routes.dart';
 import '../../domain/entities/character.dart';
@@ -61,7 +62,7 @@ class _CharacterListViewState extends State<_CharacterListView> {
           return switch (state) {
             CharacterListInitial() => const SizedBox.shrink(),
             CharacterListLoading() => const Center(
-                child: CircularProgressIndicator(),
+                child: DragonBallLoader(size: 100),
               ),
             CharacterListError() => _ErrorView(
                 message: state.message,
