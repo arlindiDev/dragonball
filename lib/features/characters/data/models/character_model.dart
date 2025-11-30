@@ -26,19 +26,5 @@ class CharacterModel extends Character {
       affiliation: json['affiliation'] ?? 'Unknown',
     );
   }
-
-  Character toEntity() {
-    return Character(
-      id: id,
-      name: name,
-      description: description,
-      image: image,
-      ki: ki,
-      maxKi: maxKi,
-      race: race,
-      gender: gender,
-      affiliation: affiliation,
-    );
-  }
 }
 

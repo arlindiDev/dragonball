@@ -31,7 +31,7 @@ class CharacterRepositoryImpl implements CharacterRepository {
       
       final characters = items
           .where((json) => json != null)
-          .map((json) => CharacterModel.fromJson(json).toEntity())
+          .map((json) => CharacterModel.fromJson(json))
           .toList();
       
       return Result.success(characters);
@@ -48,7 +48,7 @@ class CharacterRepositoryImpl implements CharacterRepository {
   Future<Result<Failure, CharacterDetail>> getCharacterById(int id) async {
     try {
       final response = await remoteDataSource.getCharacterById(id);
-      final characterDetail = CharacterDetailModel.fromJson(response).toEntity();
+      final characterDetail = CharacterDetailModel.fromJson(response);
       
       return Result.success(characterDetail);
     } on ServerException catch (e) {

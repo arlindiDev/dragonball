@@ -45,21 +45,5 @@ class CharacterDetailModel extends CharacterDetail {
       transformations: transformationsList,
     );
   }
-
-  CharacterDetail toEntity() {
-    return CharacterDetail(
-      id: id,
-      name: name,
-      description: description,
-      image: image,
-      ki: ki,
-      maxKi: maxKi,
-      race: race,
-      gender: gender,
-      affiliation: affiliation,
-      planet: planet,
-      transformations: transformations,
-    );
-  }
 }
 

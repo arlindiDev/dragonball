@@ -10,9 +10,5 @@ class PlanetModel extends Planet {
       name: json['name'] ?? 'Unknown',
     );
   }
-
-  Planet toEntity() {
-    return Planet(name: name);
-  }
 }
 

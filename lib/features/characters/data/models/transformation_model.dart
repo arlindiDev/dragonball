@@ -10,9 +10,5 @@ class TransformationModel extends Transformation {
       name: json['name'] ?? '',
     );
   }
-
-  Transformation toEntity() {
-    return Transformation(name: name);
-  }
 }
 
