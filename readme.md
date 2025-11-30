@@ -68,6 +68,11 @@ lib/
 4. **Dependency Injection**: Uses GetIt for loose coupling
 5. **Error Handling**: Custom Failure types with Either (Result) pattern
 
+
+### Data Models vs Entities
+
+**Note**: While JSON data models and business entities have the same properties in this app, they're kept separate for scalability. In larger apps, entities often need additional properties not from the API (computed values, UI state, favorites) or can be combinations of multiple models. This separation maintains clean architecture and allows API changes without impacting business logic.
+
 ## UI Features
 
 ### Character List Screen
@@ -207,9 +212,3 @@ class AppTextStyles {
 ---
 
 **API**: [Dragon Ball API](https://web.dragonball-api.com/)
-
-**Getting Started**:
-```bash
-flutter pub get
-flutter run
-```
