@@ -6,7 +6,6 @@ import '../../../../../injection_container.dart';
 import '../../bloc/character_detail/character_detail_bloc.dart';
 import '../../bloc/character_detail/character_detail_event.dart';
 import '../../bloc/character_detail/character_detail_state.dart';
-import '../widgets/animated_background.dart';
 import '../widgets/details/character_detail_loaded_view.dart';
 import '../widgets/error_view.dart';
 
@@ -46,8 +45,6 @@ class _CharacterDetailView extends StatelessWidget {
         return Scaffold(
           body: Stack(
             children: [
-              const AnimatedBackground(),
-              
               switch (state) {
                 CharacterDetailInitial() => const SizedBox.shrink(),
                 CharacterDetailLoading() => const Center(
@@ -96,6 +93,7 @@ class _CharacterDetailView extends StatelessWidget {
                   onPressed: () => Navigator.of(context).pop(),
                 ),
               ),
+            
             ],
           ),
         );

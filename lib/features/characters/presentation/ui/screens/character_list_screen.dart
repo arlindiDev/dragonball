@@ -6,7 +6,6 @@ import '../../../../../injection_container.dart';
 import '../../bloc/character_list/character_list_bloc.dart';
 import '../../bloc/character_list/character_list_event.dart';
 import '../../bloc/character_list/character_list_state.dart';
-import '../widgets/animated_background.dart';
 import '../widgets/list/character_list_loaded_view.dart';
 import '../widgets/error_view.dart';
 
@@ -80,10 +79,6 @@ class _CharacterListViewState extends State<_CharacterListView> {
       ),
       body: Stack(
         children: [
-          // Animated background effect
-          const AnimatedBackground(),
-          
-          // Main content
           BlocBuilder<CharacterListBloc, CharacterListState>(
             builder: (context, state) {
               return switch (state) {
