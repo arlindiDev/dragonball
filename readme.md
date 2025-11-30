@@ -1,42 +1,200 @@
 # Dragon Ball Characters App
 
-A Flutter application that displays Dragon Ball characters from the Dragon Ball API using Clean Architecture and BLoC state management pattern.
+A Flutter application showcasing Dragon Ball characters with Clean Architecture, BLoC state management, and custom animations.
 
-## Features
+## Demo
 
-- View a paginated list of Dragon Ball characters (20 at a time)
-- Tap on any character to see detailed information
-- View character's origin planet and transformations
-- Clean Architecture with proper separation of concerns
-- BLoC pattern for predictable state management
-- Error handling and loading states
+https://github.com/user-attachments/assets/screenrecording.mov
 
-## Architecture
+## Architecture & Code Structure
 
-This project follows Clean Architecture principles with three main layers:
+This project follows **Clean Architecture** with clear separation of concerns across three layers:
 
-- **Domain Layer**: Business logic, entities, and repository interfaces
-- **Data Layer**: API calls, data models, and repository implementations
-- **Presentation Layer**: UI, widgets, and BLoC state management
+1. **Data Layer** - External data sources (API calls, models, repository implementations)
+2. **Domain Layer** - Business logic (entities, use cases, repository contracts)
+3. **Presentation Layer** - UI and state management (BLoC, screens, widgets)
 
-## API
+### Folder Structure
+```
+lib/
+├── core/                          # Shared utilities & UI components
+│   ├── constants/                 # API endpoints and constants
+│   ├── error/                     # Error handling (Failures & Exceptions)
+│   ├── result/                    # Result type for error handling
+│   ├── ui/theme/                  # Colors and theme configuration
+│   ├── usecases/                  # Base UseCase interface
+│   └── widgets/                   # Reusable widgets (loaders, skeletons)
+│
+├── features/characters/           # Characters feature module
+│   ├── data/                      # Data Layer
+│   │   ├── datasources/           # API data sources
+│   │   ├── models/                # Data models with JSON serialization
+│   │   └── repositories/          # Repository implementations
+│   │
+│   ├── domain/                    # Domain Layer (Business Logic)
+│   │   ├── entities/              # Pure business entities
+│   │   ├── repositories/          # Repository contracts
+│   │   └── usecases/              # Business use cases
+│   │
+│   └── presentation/              # Presentation Layer
+│       ├── bloc/                  # BLoC state management
+│       └── ui/
+│           ├── painters/          # Custom painters for animations
+│           ├── screens/           # Screen widgets
+│           └── widgets/           # UI components
+│               ├── list/          # List screen components
+│               └── details/       # Detail screen components
+│
+├── injection_container.dart       # Dependency injection setup
+├── main.dart                      # App entry point
+└── routes.dart                    # Navigation routes
+```
 
-This app uses the Dragon Ball API: https://web.dragonball-api.com/
+### Technologies Used
+- **Flutter & Dart** - UI framework
+- **BLoC (flutter_bloc)** - State management
+- **Dio** - HTTP client for API calls
+- **GetIt** - Dependency injection
+- **Equatable** - Value equality
+- **Shimmer** - Loading skeleton animations
 
-## Getting Started
+### Key Architecture Patterns
+1. **Clean Architecture**: Separation between data, domain, and presentation layers
+2. **Repository Pattern**: Abstracts data sources from business logic
+3. **BLoC Pattern**: Manages UI state predictably
+4. **Dependency Injection**: Uses GetIt for loose coupling
+5. **Error Handling**: Custom Failure types with Either (Result) pattern
 
-1. Clone the repository
-2. Run `flutter pub get` to install dependencies
-3. Run `flutter run` to start the app
+## UI Features
 
-## Dependencies
+### Character List Screen
 
-- `flutter_bloc`: State management
-- `equatable`: Value equality
-- `dio`: HTTP client
-- `get_it`: Dependency injection
-- `dartz`: Functional programming
+**Features:**
+- **Initial Loading**: Displays a card shimmer skeleton while fetching data
+- **Character Cards**: Animated cards with:
+  - Floating animation effect (moves up/down)
+  - Pulsing glow aura around character images
+  - Hero animation for smooth transitions
+  - Power level (Ki) badges
+  - Character names with gradient text
+  - Dynamic color gradients based on character ID
+- **Load More**: Automatically loads next page when scrolling to 80% of list
+- **Pull to Refresh**: Swipe down to refresh the entire list
+- **Error Handling**: Shows error view with retry button on failure
+- **Pagination**: Loads 20 characters per page
 
-## Development Status
+### Character Detail Screen
 
-🚧 Work in Progress - Following Clean Architecture implementation plan
+**Features:**
+- **Initial Loading**: Custom Dragon Ball rotating loader animation
+- **Character Details**: Displays comprehensive information including:
+  - Large hero image with animated energy particles
+  - Name with gradient styling
+  - Description
+  - Gender, race, and affiliation badges
+  - Power level (Ki) and Max Ki stats
+- **Origin Planet Section**: Shows planet details with custom styling
+- **Transformations**: List of character transformations with color-coded badges
+- **Animated Background**: Dynamic gradient background with energy effects
+- **Custom Back Button**: Themed back button with border glow
+- **Error Handling**: Error view with retry functionality
+- **Hero Animation**: Smooth image transition from list to detail
+
+## Color Coding System
+
+Characters are assigned dynamic colors based on their ID using a modulo pattern:
+
+```
+Character ID % 5:
+├── 0 → Orange Gradient   (#FF6B00 → #FF8C00)
+├── 1 → Blue Gradient     (#0066CC → #0099FF)
+├── 2 → Purple Gradient   (#9900CC → #CC00FF)
+├── 3 → Green Gradient    (#00CC66 → #00FF99)
+└── 4 → Red Gradient      (#CC0000 → #FF3333)
+```
+
+**Transformation Colors** (rotated by index):
+- Gold (#FFD700)
+- Cyan (#00FFFF)
+- Magenta (#FF00FF)
+- Lime (#00FF00)
+- Deep Pink (#FF1493)
+
+# What Should Be Added in a Real Production App
+
+### 1. **Internationalization**
+- Support multiple languages
+- Extract all hardcoded strings to translation files
+- Consider RTL layout support
+
+### 2. **Design System & Reusable UI Components**
+```
+lib/core/ui/
+├── components/           # Atomic design components
+│   ├── atoms/           # Buttons, text inputs, badges
+│   ├── molecules/       # Cards, form groups
+│   └── organisms/       # Complex components
+├── theme/
+│   ├── spacing.dart     # Consistent padding/margin values
+│   ├── typography.dart  # Font styles and weights
+│   ├── dimensions.dart  # Responsive sizing
+│   └── colors.dart      # Extended color palette
+```
+
+### 3. **Responsive Design System**
+- Create `AppDimensions` class with responsive values
+- Support multiple screen sizes (mobile, tablet, desktop)
+- Use `LayoutBuilder` and `MediaQuery` effectively
+- Define breakpoints for different devices
+```dart
+class AppSpacing {
+  static const double xs = 4.0;
+  static const double sm = 8.0;
+  static const double md = 16.0;
+  static const double lg = 24.0;
+  static const double xl = 32.0;
+}
+```
+
+### 4. **Typography System**
+- Define font families and load custom fonts
+- Create consistent text styles hierarchy
+- Support different font weights
+- Implement responsive font scaling
+```dart
+class AppTextStyles {
+  static TextStyle h1 = TextStyle(...);
+  static TextStyle h2 = TextStyle(...);
+  static TextStyle body = TextStyle(...);
+  static TextStyle caption = TextStyle(...);
+}
+```
+
+### 5. **Testing**
+
+**Unit Tests:**
+- Test BLoC logic (events → states)
+- Test use cases
+- Test repository implementations
+- Test data models serialization/deserialization
+
+**Widget Tests:**
+- Test UI components in isolation
+- Test state transitions
+- Test user interactions
+
+### 7. **Code Quality**
+- Implement stricter linting rules
+- Add pre-commit hooks, for example run flutter analyze
+- Use code generation for boilerplate (freezed, json_serializable)
+- Document complex business logic
+
+---
+
+**API**: [Dragon Ball API](https://web.dragonball-api.com/)
+
+**Getting Started**:
+```bash
+flutter pub get
+flutter run
+```
