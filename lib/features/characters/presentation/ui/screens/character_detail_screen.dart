@@ -22,13 +22,15 @@ class CharacterDetailScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => serviceLocator<CharacterDetailBloc>()
         ..add(LoadCharacterDetail(characterId)),
-      child: const _CharacterDetailView(),
+      child: _CharacterDetailView(characterId: characterId),
     );
   }
 }
 
 class _CharacterDetailView extends StatelessWidget {
-  const _CharacterDetailView();
+  final int characterId;
+
+  const _CharacterDetailView({required this.characterId});
 
   List<Color> _getGradientColors(int characterId) {
     return AppColors.getGradientByIndex(characterId);
@@ -54,14 +56,8 @@ class _CharacterDetailView extends StatelessWidget {
                     title: 'Error loading character',
                     message: state.message,
                     onRetry: () {
-                      final bloc = context.read<CharacterDetailBloc>();
-                      if (bloc.state is CharacterDetailError) {
-                        final screen = context
-                            .findAncestorWidgetOfExactType<CharacterDetailScreen>();
-                        if (screen != null) {
-                          bloc.add(LoadCharacterDetail(screen.characterId));
-                        }
-                      }
+                      context.read<CharacterDetailBloc>()
+                        .add(LoadCharacterDetail(characterId));
                     },
                   ),
                 CharacterDetailLoaded() => CharacterDetailLoadedView(
