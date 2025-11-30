@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/ui/theme/colors.dart';
 import '../../../../../core/ui/widgets/character_card_skeleton.dart';
-import '../../../../../core/widgets/paginated_scroll_view.dart';
+import '../../../../../core/ui/widgets/paginated_scroll_view.dart';
 import '../../../../../injection_container.dart';
 import '../../bloc/character_list/character_list_bloc.dart';
 import '../../bloc/character_list/character_list_event.dart';
