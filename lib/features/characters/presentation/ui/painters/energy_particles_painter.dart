@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../../core/ui/theme/colors.dart';
 
 class EnergyParticlesPainter extends CustomPainter {
   final double animationValue;
@@ -11,10 +12,10 @@ class EnergyParticlesPainter extends CustomPainter {
       ..style = PaintingStyle.fill;
 
     final colors = [
-      const Color(0xFFFF6B00).withValues(alpha: 0.3),
-      const Color(0xFF0066CC).withValues(alpha: 0.3),
-      const Color(0xFF9900CC).withValues(alpha: 0.3),
-      const Color(0xFF00CC66).withValues(alpha: 0.3),
+      AppColors.orange.withValues(alpha: 0.3),
+      AppColors.blue.withValues(alpha: 0.3),
+      AppColors.purple.withValues(alpha: 0.3),
+      AppColors.green.withValues(alpha: 0.3),
     ];
 
     for (int i = 0; i < 20; i++) {

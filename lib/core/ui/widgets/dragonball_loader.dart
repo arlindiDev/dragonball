@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
+import '../theme/colors.dart';
 
 class DragonBallLoader extends StatefulWidget {
   final double size;
@@ -57,12 +58,12 @@ class _DragonBallLoaderState extends State<DragonBallLoader>
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFFFF6B00).withValues(alpha: 0.6),
+                    color: AppColors.orange.withValues(alpha: 0.6),
                     blurRadius: 30,
                     spreadRadius: 10,
                   ),
                   BoxShadow(
-                    color: const Color(0xFFFFD700).withValues(alpha: 0.4),
+                    color: AppColors.gold.withValues(alpha: 0.4),
                     blurRadius: 20,
                     spreadRadius: 5,
                   ),

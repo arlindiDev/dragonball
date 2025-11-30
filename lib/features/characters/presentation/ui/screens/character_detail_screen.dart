@@ -7,7 +7,7 @@ import '../../bloc/character_detail/character_detail_bloc.dart';
 import '../../bloc/character_detail/character_detail_event.dart';
 import '../../bloc/character_detail/character_detail_state.dart';
 import '../widgets/animated_background.dart';
-import '../widgets/character_detail_loaded_view.dart';
+import '../widgets/details/character_detail_loaded_view.dart';
 import '../widgets/error_view.dart';
 
 class CharacterDetailScreen extends StatelessWidget {
@@ -41,7 +41,7 @@ class _CharacterDetailView extends StatelessWidget {
       builder: (context, state) {
         final gradientColors = state is CharacterDetailLoaded
             ? _getGradientColors(state.character.id)
-            : [const Color(0xFFFF6B00), const Color(0xFFFF8C00)];
+            : AppColors.gradientOrange;
 
         return Scaffold(
           body: Stack(

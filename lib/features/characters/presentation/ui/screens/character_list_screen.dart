@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../core/ui/theme/colors.dart';
 import '../../../../../core/ui/widgets/character_card_skeleton.dart';
 import '../../../../../injection_container.dart';
 import '../../bloc/character_list/character_list_bloc.dart';
 import '../../bloc/character_list/character_list_event.dart';
 import '../../bloc/character_list/character_list_state.dart';
 import '../widgets/animated_background.dart';
-import '../widgets/character_list_loaded_view.dart';
+import '../widgets/list/character_list_loaded_view.dart';
 import '../widgets/error_view.dart';
 
 class CharacterListScreen extends StatelessWidget {
@@ -69,7 +70,7 @@ class _CharacterListViewState extends State<_CharacterListView> {
               end: Alignment.bottomRight,
               colors: [
                 Colors.black,
-                const Color(0xFFFF6B00).withValues(alpha: 0.1),
+                AppColors.orange.withValues(alpha: 0.1),
                 Colors.black,
               ],
             ),

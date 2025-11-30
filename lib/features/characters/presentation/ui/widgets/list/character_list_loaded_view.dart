@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../../../../core/ui/widgets/dragonball_loader.dart';
-import '../../../../../routes.dart';
-import '../../../domain/entities/character.dart';
-import 'character_card.dart';
+import '../../../../../../core/ui/widgets/dragonball_loader.dart';
+import '../../../../../../routes.dart';
+import '../../../../domain/entities/character.dart';
+import '../character_card.dart';
 
 class CharacterListLoadedView extends StatelessWidget {
   final List<Character> characters;
