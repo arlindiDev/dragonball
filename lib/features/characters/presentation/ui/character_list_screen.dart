@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
+import '../../../../core/widgets/character_card_skeleton.dart';
 import '../../../../core/widgets/dragonball_loader.dart';
 import '../../../../injection_container.dart';
 import '../../../../routes.dart';
@@ -61,8 +62,15 @@ class _CharacterListViewState extends State<_CharacterListView> {
         builder: (context, state) {
           return switch (state) {
             CharacterListInitial() => const SizedBox.shrink(),
-            CharacterListLoading() => const Center(
-                child: DragonBallLoader(size: 100),
+            CharacterListLoading() => ListView.builder(
+                padding: const EdgeInsets.only(
+                  left: 8,
+                  right: 8,
+                  top: 8,
+                  bottom: 24,
+                ),
+                itemCount: 6,
+                itemBuilder: (context, index) => const CharacterCardSkeleton(),
               ),
             CharacterListError() => _ErrorView(
                 message: state.message,
@@ -126,7 +134,7 @@ class _LoadedView extends StatelessWidget {
             return const Center(
               child: Padding(
                 padding: EdgeInsets.all(16.0),
-                child: CircularProgressIndicator(),
+                child: DragonBallLoader(size: 50),
               ),
             );
           }
