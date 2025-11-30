@@ -2,19 +2,31 @@ import '../../domain/entities/character_detail.dart';
 import 'planet_model.dart';
 import 'transformation_model.dart';
 
-class CharacterDetailModel extends CharacterDetail {
+class CharacterDetailModel {
+  final int id;
+  final String name;
+  final String description;
+  final String image;
+  final String ki;
+  final String maxKi;
+  final String race;
+  final String gender;
+  final String affiliation;
+  final PlanetModel? planet;
+  final List<TransformationModel> transformations;
+
   const CharacterDetailModel({
-    required super.id,
-    required super.name,
-    required super.description,
-    required super.image,
-    required super.ki,
-    required super.maxKi,
-    required super.race,
-    required super.gender,
-    required super.affiliation,
-    super.planet,
-    required super.transformations,
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.image,
+    required this.ki,
+    required this.maxKi,
+    required this.race,
+    required this.gender,
+    required this.affiliation,
+    this.planet,
+    required this.transformations,
   });
 
   factory CharacterDetailModel.fromJson(Map<String, dynamic> json) {
@@ -43,6 +55,22 @@ class CharacterDetailModel extends CharacterDetail {
       affiliation: json['affiliation'] ?? 'Unknown',
       planet: planet,
       transformations: transformationsList,
+    );
+  }
+
+  CharacterDetail toEntity() {
+    return CharacterDetail(
+      id: id,
+      name: name,
+      description: description,
+      image: image,
+      ki: ki,
+      maxKi: maxKi,
+      race: race,
+      gender: gender,
+      affiliation: affiliation,
+      planet: planet?.toEntity(),
+      transformations: transformations.map((t) => t.toEntity()).toList(),
     );
   }
 }

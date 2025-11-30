@@ -1,16 +1,26 @@
 import '../../domain/entities/character.dart';
 
-class CharacterModel extends Character {
+class CharacterModel {
+  final int id;
+  final String name;
+  final String description;
+  final String image;
+  final String ki;
+  final String maxKi;
+  final String race;
+  final String gender;
+  final String affiliation;
+
   const CharacterModel({
-    required super.id,
-    required super.name,
-    required super.description,
-    required super.image,
-    required super.ki,
-    required super.maxKi,
-    required super.race,
-    required super.gender,
-    required super.affiliation,
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.image,
+    required this.ki,
+    required this.maxKi,
+    required this.race,
+    required this.gender,
+    required this.affiliation,
   });
 
   factory CharacterModel.fromJson(Map<String, dynamic> json) {
@@ -24,6 +34,20 @@ class CharacterModel extends Character {
       race: json['race'] ?? 'Unknown',
       gender: json['gender'] ?? 'Unknown',
       affiliation: json['affiliation'] ?? 'Unknown',
+    );
+  }
+
+  Character toEntity() {
+    return Character(
+      id: id,
+      name: name,
+      description: description,
+      image: image,
+      ki: ki,
+      maxKi: maxKi,
+      race: race,
+      gender: gender,
+      affiliation: affiliation,
     );
   }
 }

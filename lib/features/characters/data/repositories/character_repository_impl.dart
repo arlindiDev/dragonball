@@ -41,16 +41,19 @@ class CharacterRepositoryImpl implements CharacterRepository {
         ));
       }
       
-      final characters = items
+      final characterModels = items
           .where((json) => json != null)
           .map((json) => CharacterModel.fromJson(json))
           .toList();
+      
+      // Convert models to entities
+      final characters = characterModels.map((model) => model.toEntity()).toList();
       
       final metaJson = response['meta'] as Map<String, dynamic>?;
       final PaginationMeta meta;
       
       if (metaJson != null) {
-        meta = PaginationMetaModel.fromJson(metaJson);
+        meta = PaginationMetaModel.fromJson(metaJson).toEntity();
       } else {
         meta = PaginationMeta(
           totalItems: characters.length,
@@ -77,9 +80,9 @@ class CharacterRepositoryImpl implements CharacterRepository {
   Future<Result<Failure, CharacterDetail>> getCharacterById(int id) async {
     try {
       final response = await remoteDataSource.getCharacterById(id);
-      final characterDetail = CharacterDetailModel.fromJson(response);
+      final characterDetailModel = CharacterDetailModel.fromJson(response);
       
-      return Result.success(characterDetail);
+      return Result.success(characterDetailModel.toEntity());
     } on ServerException catch (e) {
       return Result.error(ServerFailure(e.message));
     } on NetworkException catch (e) {

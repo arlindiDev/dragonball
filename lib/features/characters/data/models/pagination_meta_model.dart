@@ -1,11 +1,16 @@
 import '../../domain/entities/pagination_meta.dart';
 
-class PaginationMetaModel extends PaginationMeta {
+class PaginationMetaModel {
+  final int totalItems;
+  final int totalPages;
+  final int currentPage;
+  final int itemCount;
+
   const PaginationMetaModel({
-    required super.totalItems,
-    required super.totalPages,
-    required super.currentPage,
-    required super.itemCount,
+    required this.totalItems,
+    required this.totalPages,
+    required this.currentPage,
+    required this.itemCount,
   });
 
   factory PaginationMetaModel.fromJson(Map<String, dynamic> json) {
@@ -24,6 +29,15 @@ class PaginationMetaModel extends PaginationMeta {
       'currentPage': currentPage,
       'itemCount': itemCount,
     };
+  }
+
+  PaginationMeta toEntity() {
+    return PaginationMeta(
+      totalItems: totalItems,
+      totalPages: totalPages,
+      currentPage: currentPage,
+      itemCount: itemCount,
+    );
   }
 }
 
