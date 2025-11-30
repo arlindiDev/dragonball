@@ -6,7 +6,7 @@ A Flutter application showcasing Dragon Ball characters with Clean Architecture,
 
 https://github.com/user-attachments/assets/screenrecording.mp4
 
-☝️ See the demo screen recording ☝️
+☝️ **See the demo screen recording** ☝️
 
 
 ## Architecture & Code Structure
