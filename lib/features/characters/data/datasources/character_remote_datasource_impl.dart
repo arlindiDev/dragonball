@@ -1,18 +1,21 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
+import 'character_remote_datasource.dart';
 
-class DragonBallApi {
+class CharacterRemoteDataSourceImpl implements CharacterRemoteDataSource {
   static const String baseUrl = 'https://dragonball-api.com/api';
   
   final Dio _dio;
 
-  DragonBallApi({Dio? dio}) 
+  CharacterRemoteDataSourceImpl({Dio? dio}) 
       : _dio = dio ?? Dio(BaseOptions(
           baseUrl: baseUrl,
           connectTimeout: const Duration(seconds: 10),
           receiveTimeout: const Duration(seconds: 10),
         ));
 
-  Future<Map<String, dynamic>> fetchCharacters({
+  @override
+  Future<Map<String, dynamic>> getCharacters({
     required int page,
     required int limit,
   }) async {
@@ -24,15 +27,18 @@ class DragonBallApi {
           'limit': limit,
         },
       );
+      debugPrint('Fetched characters - page: $page, limit: $limit');
       return response.data;
     } on DioException catch (e) {
       throw _handleError(e);
     }
   }
 
-  Future<Map<String, dynamic>> fetchCharacterById(int id) async {
+  @override
+  Future<Map<String, dynamic>> getCharacterById(int id) async {
     try {
       final response = await _dio.get('/characters/$id');
+      debugPrint('Fetched character by id: $id');
       return response.data;
     } on DioException catch (e) {
       throw _handleError(e);
@@ -53,3 +59,4 @@ class DragonBallApi {
     }
   }
 }
+
