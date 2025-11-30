@@ -2,16 +2,16 @@ import 'package:equatable/equatable.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/result/result.dart';
 import '../../../../core/usecases/usecase.dart';
-import '../entities/character.dart';
+import '../entities/character_list_result.dart';
 import '../repositories/character_repository.dart';
 
-class GetCharacters implements UseCase<List<Character>, GetCharactersParams> {
+class GetCharacters implements UseCase<CharacterListResult, GetCharactersParams> {
   final CharacterRepository repository;
 
   GetCharacters(this.repository);
 
   @override
-  Future<Result<Failure, List<Character>>> call(GetCharactersParams params) {
+  Future<Result<Failure, CharacterListResult>> call(GetCharactersParams params) {
     return repository.getCharacters(
       page: params.page,
       limit: params.limit,

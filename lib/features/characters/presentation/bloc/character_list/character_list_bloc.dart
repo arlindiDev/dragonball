@@ -26,10 +26,10 @@ class CharacterListBloc extends Bloc<CharacterListEvent, CharacterListState> {
 
     result.fold(
       (failure) => emit(CharacterListError(failure.message)),
-      (characters) => emit(CharacterListLoaded(
-        characters: characters,
-        hasMore: characters.length >= _pageLimit,
-        currentPage: 1,
+      (result) => emit(CharacterListLoaded(
+        characters: result.characters,
+        hasMore: result.meta.hasMore,
+        currentPage: result.meta.currentPage,
       )),
     );
   }
@@ -57,14 +57,14 @@ class CharacterListBloc extends Bloc<CharacterListEvent, CharacterListState> {
       (failure) {
         emit(currentState.copyWith(isLoadingMore: false));
       },
-      (newCharacters) {
+      (result) {
         final updatedCharacters = List.of(currentState.characters)
-          ..addAll(newCharacters);
+          ..addAll(result.characters);
         
         emit(CharacterListLoaded(
           characters: updatedCharacters,
-          hasMore: newCharacters.length >= _pageLimit,
-          currentPage: nextPage,
+          hasMore: result.meta.hasMore,
+          currentPage: result.meta.currentPage,
           isLoadingMore: false,
         ));
       },
@@ -81,10 +81,10 @@ class CharacterListBloc extends Bloc<CharacterListEvent, CharacterListState> {
 
     result.fold(
       (failure) => emit(CharacterListError(failure.message)),
-      (characters) => emit(CharacterListLoaded(
-        characters: characters,
-        hasMore: characters.length >= _pageLimit,
-        currentPage: 1,
+      (result) => emit(CharacterListLoaded(
+        characters: result.characters,
+        hasMore: result.meta.hasMore,
+        currentPage: result.meta.currentPage,
       )),
     );
   }
