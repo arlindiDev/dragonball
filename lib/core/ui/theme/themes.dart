@@ -1,29 +1,32 @@
 import 'package:flutter/material.dart';
+import 'colors.dart';
 
 class AppThemes {
   static ThemeData darkTheme() {
     return ThemeData(
       colorScheme: ColorScheme.fromSeed(
-        seedColor: Colors.grey,
+        seedColor: AppColors.orange,
         brightness: Brightness.dark,
       ),
       useMaterial3: true,
       scaffoldBackgroundColor: Colors.black,
       
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         centerTitle: false,
         elevation: 0,
         backgroundColor: Colors.black,
         foregroundColor: Colors.white,
-        titleTextStyle: TextStyle(
+        titleTextStyle: const TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.bold,
           color: Colors.white,
         ),
+        // Add subtle gradient effect to app bar
+        shadowColor: AppColors.orange.withValues(alpha: 0.3),
       ),
       
       cardTheme: CardThemeData(
-        elevation: 0,
+        elevation: 8,
         color: Colors.grey[900],
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),

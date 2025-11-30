@@ -22,7 +22,7 @@ class CharacterRemoteDataSourceImpl implements CharacterRemoteDataSource {
           'limit': limit,
         },
       );
-      debugPrint('Fetched characters - page: $page, limit: $limit');
+
       return response.data;
     } on DioException catch (e) {
       throw _handleError(e);
@@ -33,7 +33,7 @@ class CharacterRemoteDataSourceImpl implements CharacterRemoteDataSource {
   Future<Map<String, dynamic>> getCharacterById(int id) async {
     try {
       final response = await _dio.get('$_charactersEndpoint/$id');
-      debugPrint('Fetched character by id: $id');
+      
       return response.data;
     } on DioException catch (e) {
       throw _handleError(e);

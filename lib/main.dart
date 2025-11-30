@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'routes.dart';
-import 'themes.dart';
+import 'core/ui/theme/themes.dart';
 import 'injection_container.dart' as di;
 
 void main() async {

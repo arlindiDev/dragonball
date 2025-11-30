@@ -6,6 +6,11 @@ class CharacterModel extends Character {
     required super.name,
     required super.description,
     required super.image,
+    required super.ki,
+    required super.maxKi,
+    required super.race,
+    required super.gender,
+    required super.affiliation,
   });
 
   factory CharacterModel.fromJson(Map<String, dynamic> json) {
@@ -14,6 +19,11 @@ class CharacterModel extends Character {
       name: json['name'] ?? '',
       description: json['description'] ?? '',
       image: json['image'] ?? '',
+      ki: json['ki'] ?? '0',
+      maxKi: json['maxKi'] ?? '0',
+      race: json['race'] ?? 'Unknown',
+      gender: json['gender'] ?? 'Unknown',
+      affiliation: json['affiliation'] ?? 'Unknown',
     );
   }
 
@@ -23,6 +33,11 @@ class CharacterModel extends Character {
       name: name,
       description: description,
       image: image,
+      ki: ki,
+      maxKi: maxKi,
+      race: race,
+      gender: gender,
+      affiliation: affiliation,
     );
   }
 }
