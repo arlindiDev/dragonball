@@ -80,13 +80,7 @@ class CharacterListBloc extends Bloc<CharacterListEvent, CharacterListState> {
     );
 
     result.fold(
-      (failure) {
-        if (state is CharacterListLoaded) {
-          emit(CharacterListError(failure.message));
-        } else {
-          emit(CharacterListError(failure.message));
-        }
-      },
+      (failure) => emit(CharacterListError(failure.message)),
       (characters) => emit(CharacterListLoaded(
         characters: characters,
         hasMore: characters.length >= _pageLimit,
