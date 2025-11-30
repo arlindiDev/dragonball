@@ -54,7 +54,6 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_character?.name ?? 'Character Detail'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: _buildBody(),
     );
@@ -131,17 +130,32 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen> {
   Widget _characterImage() {
     return Hero(
       tag: 'character_${_character!.id}',
-      child: Image.network(
-        _character!.image,
+      child: Container(
         height: 300,
-        fit: BoxFit.fitHeight,
-        errorBuilder: (context, error, stackTrace) {
-          return Container(
-            height: 300,
-            color: Colors.grey[300],
-            child: const Icon(Icons.person, size: 100),
-          );
-        },
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.grey[900]!,
+              Colors.black,
+            ],
+          ),
+        ),
+        child: Center(
+          child: Image.network(
+            _character!.image,
+            height: 280,
+            fit: BoxFit.fitHeight,
+            errorBuilder: (context, error, stackTrace) {
+              return Icon(
+                Icons.person,
+                size: 100,
+                color: Colors.grey[700],
+              );
+            },
+          ),
+        ),
       ),
     );
   }
@@ -151,6 +165,7 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen> {
       _character!.name,
       style: Theme.of(context).textTheme.headlineMedium?.copyWith(
             fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
     );
   }
@@ -161,7 +176,9 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen> {
       title: 'Description',
       child: Text(
         _character!.description,
-        style: Theme.of(context).textTheme.bodyLarge,
+        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              color: Colors.grey[300],
+            ),
       ),
     );
   }
@@ -170,18 +187,29 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen> {
     return _buildSection(
       context,
       title: 'Origin Planet',
-      child: Row(
-        children: [
-          Icon(
-            Icons.public,
-            color: Theme.of(context).colorScheme.primary,
-          ),
-          const SizedBox(width: 8),
-          Text(
-            _character!.planetName ?? 'Unknown',
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-        ],
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: Colors.grey[850],
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Row(
+          children: [
+            Icon(
+              Icons.public,
+              color: Colors.grey[400],
+              size: 28,
+            ),
+            const SizedBox(width: 12),
+            Text(
+              _character!.planetName ?? 'Unknown',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -191,30 +219,62 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen> {
       context,
       title: 'Transformations',
       child: _character!.transformations.isEmpty
-          ? Text(
-              'No transformations',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Colors.grey[600],
-                    fontStyle: FontStyle.italic,
+          ? Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.grey[850],
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.info_outline,
+                    color: Colors.grey[500],
+                    size: 20,
                   ),
+                  const SizedBox(width: 8),
+                  Text(
+                    'No transformations',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Colors.grey[500],
+                          fontStyle: FontStyle.italic,
+                        ),
+                  ),
+                ],
+              ),
             )
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: _character!.transformations.map((transformation) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0),
+              children: _character!.transformations.asMap().entries.map((entry) {
+                final index = entry.key;
+                final transformation = entry.value;
+                return Container(
+                  margin: EdgeInsets.only(
+                    bottom: index < _character!.transformations.length - 1 ? 8.0 : 0,
+                  ),
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[850],
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: Colors.grey[700]!,
+                    ),
+                  ),
                   child: Row(
                     children: [
                       Icon(
                         Icons.auto_awesome,
                         size: 20,
-                        color: Theme.of(context).colorScheme.primary,
+                        color: Colors.grey[400],
                       ),
-                      const SizedBox(width: 8),
+                      const SizedBox(width: 12),
                       Expanded(
                         child: Text(
                           transformation,
-                          style: Theme.of(context).textTheme.bodyLarge,
+                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                              ),
                         ),
                       ),
                     ],
@@ -233,6 +293,7 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen> {
           title,
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
+                color: Colors.white,
               ),
         ),
         const SizedBox(height: 8),
