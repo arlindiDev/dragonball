@@ -3,16 +3,11 @@ import 'package:flutter/foundation.dart';
 import 'character_remote_datasource.dart';
 
 class CharacterRemoteDataSourceImpl implements CharacterRemoteDataSource {
-  static const String baseUrl = 'https://dragonball-api.com/api';
+  static const String _charactersEndpoint = '/characters';
   
   final Dio _dio;
 
-  CharacterRemoteDataSourceImpl({Dio? dio}) 
-      : _dio = dio ?? Dio(BaseOptions(
-          baseUrl: baseUrl,
-          connectTimeout: const Duration(seconds: 10),
-          receiveTimeout: const Duration(seconds: 10),
-        ));
+  CharacterRemoteDataSourceImpl({required Dio dio}) : _dio = dio;
 
   @override
   Future<Map<String, dynamic>> getCharacters({
@@ -21,7 +16,7 @@ class CharacterRemoteDataSourceImpl implements CharacterRemoteDataSource {
   }) async {
     try {
       final response = await _dio.get(
-        '/characters',
+        _charactersEndpoint,
         queryParameters: {
           'page': page,
           'limit': limit,
@@ -37,7 +32,7 @@ class CharacterRemoteDataSourceImpl implements CharacterRemoteDataSource {
   @override
   Future<Map<String, dynamic>> getCharacterById(int id) async {
     try {
-      final response = await _dio.get('/characters/$id');
+      final response = await _dio.get('$_charactersEndpoint/$id');
       debugPrint('Fetched character by id: $id');
       return response.data;
     } on DioException catch (e) {
