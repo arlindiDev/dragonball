@@ -13,7 +13,7 @@ class AppColors {
   static const Color redLight = Color(0xFFFF3333);
   
   static const Color gold = Color(0xFFFFD700);
-  static const Color cyan = Color(0x00FFFFFF);
+  static const Color cyan = Color(0xFF00FFFF);
   static const Color magenta = Color(0xFFFF00FF);
   static const Color lime = Color(0xFF00FF00);
   static const Color deepPink = Color(0xFFFF1493);
