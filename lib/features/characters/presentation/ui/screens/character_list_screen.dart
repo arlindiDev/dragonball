@@ -46,8 +46,9 @@ class _CharacterListViewState extends State<_CharacterListView> {
   }
 
   void _onScroll() {
+    const scrollLoadMoreThreshold = 0.8; // Load more when 80% scrolled
     if (_scrollController.position.pixels >=
-        _scrollController.position.maxScrollExtent * 0.8) {
+        _scrollController.position.maxScrollExtent * scrollLoadMoreThreshold) {
       context.read<CharacterListBloc>().add(const LoadMoreCharacters());
     }
   }

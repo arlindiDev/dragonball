@@ -18,11 +18,16 @@ class EnergyParticlesPainter extends CustomPainter {
       AppColors.green.withValues(alpha: 0.3),
     ];
 
-    for (int i = 0; i < 20; i++) {
+    const particleCount = 20;
+    const baseRadius = 2.0;
+    const radiusVariation = 1.5;
+    const horizontalSpacing = 100;
+    
+    for (int i = 0; i < particleCount; i++) {
       final offset = (animationValue + i * 0.05) % 1.0;
-      final x = (i * 123.456) % size.width;
+      final x = (i * horizontalSpacing) % size.width;
       final y = size.height * offset;
-      final radius = 2.0 + (i % 3) * 1.5;
+      final radius = baseRadius + (i % 3) * radiusVariation;
       
       paint.color = colors[i % colors.length];
       
