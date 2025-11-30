@@ -33,6 +33,14 @@ class _CharacterDetailView extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
+            leading: IconButton(
+              icon: Image.asset(
+                'assets/images/back.png',
+                width: 32,
+                height: 32,
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
             title: Text(
               state is CharacterDetailLoaded
                   ? state.character.name
@@ -67,10 +75,42 @@ class _CharacterDetailView extends StatelessWidget {
   }
 }
 
-class _LoadedView extends StatelessWidget {
+class _LoadedView extends StatefulWidget {
   final CharacterDetail character;
 
   const _LoadedView({required this.character});
+
+  @override
+  State<_LoadedView> createState() => _LoadedViewState();
+}
+
+class _LoadedViewState extends State<_LoadedView>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 2000),
+      vsync: this,
+    )..repeat(reverse: true);
+
+    _animation = Tween<double>(
+      begin: -10.0,
+      end: 10.0,
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeInOut,
+    ));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +142,7 @@ class _LoadedView extends StatelessWidget {
 
   Widget _characterImage(BuildContext context) {
     return Hero(
-      tag: 'character_${character.id}',
+      tag: 'character_${widget.character.id}',
       child: Container(
         height: 300,
         decoration: BoxDecoration(
@@ -116,17 +156,26 @@ class _LoadedView extends StatelessWidget {
           ),
         ),
         child: Center(
-          child: Image.network(
-            character.image,
-            height: 280,
-            fit: BoxFit.fitHeight,
-            errorBuilder: (context, error, stackTrace) {
-              return Icon(
-                Icons.person,
-                size: 100,
-                color: Colors.grey[700],
+          child: AnimatedBuilder(
+            animation: _animation,
+            builder: (context, child) {
+              return Transform.translate(
+                offset: Offset(0, _animation.value),
+                child: child,
               );
             },
+            child: Image.network(
+              widget.character.image,
+              height: 280,
+              fit: BoxFit.fitHeight,
+              errorBuilder: (context, error, stackTrace) {
+                return Icon(
+                  Icons.person,
+                  size: 100,
+                  color: Colors.grey[700],
+                );
+              },
+            ),
           ),
         ),
       ),
@@ -135,7 +184,7 @@ class _LoadedView extends StatelessWidget {
 
   Widget _characterName(BuildContext context) {
     return Text(
-      character.name,
+      widget.character.name,
       style: Theme.of(context).textTheme.headlineMedium?.copyWith(
             fontWeight: FontWeight.bold,
             color: Colors.white,
@@ -148,7 +197,7 @@ class _LoadedView extends StatelessWidget {
       context,
       title: 'Description',
       child: Text(
-        character.description,
+        widget.character.description,
         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
               color: Colors.grey[300],
             ),
@@ -175,7 +224,7 @@ class _LoadedView extends StatelessWidget {
             ),
             const SizedBox(width: 12),
             Text(
-              character.planet?.name ?? 'Unknown',
+              widget.character.planet?.name ?? 'Unknown',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: Colors.white,
@@ -191,7 +240,7 @@ class _LoadedView extends StatelessWidget {
     return _buildSection(
       context,
       title: 'Transformations',
-      child: character.transformations.isEmpty
+      child: widget.character.transformations.isEmpty
           ? Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -218,12 +267,15 @@ class _LoadedView extends StatelessWidget {
             )
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: character.transformations.asMap().entries.map((entry) {
+              children: widget.character.transformations
+                  .asMap()
+                  .entries
+                  .map((entry) {
                 final index = entry.key;
                 final transformation = entry.value;
                 return Container(
                   margin: EdgeInsets.only(
-                    bottom: index < character.transformations.length - 1
+                    bottom: index < widget.character.transformations.length - 1
                         ? 8.0
                         : 0,
                   ),

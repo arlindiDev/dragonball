@@ -56,7 +56,13 @@ class _CharacterListViewState extends State<_CharacterListView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dragon Ball Characters'),
+        toolbarHeight: 84,
+        title: Image.asset(
+          'assets/images/logo.png',
+          height: 80,
+          fit: BoxFit.contain,
+        ),
+        centerTitle: true,
       ),
       body: BlocBuilder<CharacterListBloc, CharacterListState>(
         builder: (context, state) {
@@ -214,28 +220,26 @@ class _CharacterCard extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(12),
-        child: Padding(
+        child: Container(
+          height: 260,
           padding: const EdgeInsets.all(12.0),
-          child: Row(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Hero(
-                tag: 'character_${character.id}',
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: SizedBox(
-                    width: 80,
-                    height: 80,
+              // Image at the top
+              Expanded(
+                child: Hero(
+                  tag: 'character_${character.id}',
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
                     child: Image.network(
                       character.image,
                       fit: BoxFit.contain,
                       errorBuilder: (context, error, stackTrace) {
-                        return Container(
-                          color: Colors.grey[800],
-                          child: Icon(
-                            Icons.person,
-                            size: 40,
-                            color: Colors.grey[600],
-                          ),
+                        return Icon(
+                          Icons.person,
+                          size: 60,
+                          color: Colors.grey[600],
                         );
                       },
                       loadingBuilder: (context, child, loadingProgress) {
@@ -244,8 +248,6 @@ class _CharacterCard extends StatelessWidget {
                           baseColor: Colors.grey[850]!,
                           highlightColor: Colors.grey[700]!,
                           child: Container(
-                            width: 80,
-                            height: 80,
                             color: Colors.grey[850],
                           ),
                         );
@@ -254,35 +256,34 @@ class _CharacterCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
+              const SizedBox(height: 12),
+              // Name and next icon at the bottom
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Spacer on the left
+                  const SizedBox(width: 32),
+                  // Name in the center
+                  Expanded(
+                    child: Text(
                       character.name,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      character.description,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: Colors.grey[400],
-                            height: 1.4,
-                          ),
                     ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 8),
-              Icon(
-                Icons.chevron_right,
-                color: Colors.grey[400],
+                  ),
+                  // Next icon on the right
+                  Image.asset(
+                    'assets/images/next.png',
+                    width: 32,
+                    height: 32,
+                  ),
+                ],
               ),
             ],
           ),
