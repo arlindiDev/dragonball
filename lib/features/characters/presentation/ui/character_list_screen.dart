@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 import '../../../../injection_container.dart';
 import '../../../../routes.dart';
 import '../../domain/entities/character.dart';
@@ -210,15 +211,11 @@ class _CharacterCard extends StatelessWidget {
             children: [
               Hero(
                 tag: 'character_${character.id}',
-                child: Container(
-                  width: 80,
-                  height: 80,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.grey[850],
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: SizedBox(
+                    width: 80,
+                    height: 80,
                     child: Image.network(
                       character.image,
                       fit: BoxFit.contain,
@@ -234,13 +231,13 @@ class _CharacterCard extends StatelessWidget {
                       },
                       loadingBuilder: (context, child, loadingProgress) {
                         if (loadingProgress == null) return child;
-                        return Center(
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
-                                : null,
+                        return Shimmer.fromColors(
+                          baseColor: Colors.grey[850]!,
+                          highlightColor: Colors.grey[700]!,
+                          child: Container(
+                            width: 80,
+                            height: 80,
+                            color: Colors.grey[850],
                           ),
                         );
                       },
