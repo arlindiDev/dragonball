@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../api/dragon_ball_api.dart';
 import '../models/character.dart';
+import '../routes.dart';
 
 class CharacterListScreen extends StatefulWidget {
   const CharacterListScreen({super.key});
@@ -181,7 +182,7 @@ class _CharacterListScreenState extends State<CharacterListScreen> {
             onTap: () {
               Navigator.pushNamed(
                 context,
-                '/character-detail',
+                AppRoutes.characterDetail,
                 arguments: character.id,
               );
             },

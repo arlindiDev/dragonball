@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'screens/character_list_screen.dart';
-import 'screens/character_detail_screen.dart';
+import 'routes.dart';
 
 void main() {
   runApp(const DragonBallApp());
@@ -15,19 +14,9 @@ class DragonBallApp extends StatelessWidget {
       title: 'Dragon Ball Characters',
       debugShowCheckedModeBanner: false,
       theme: _buildTheme(),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const CharacterListScreen(),
-      },
-      onGenerateRoute: (settings) {
-        if (settings.name == '/character-detail') {
-          final characterId = settings.arguments as int;
-          return MaterialPageRoute(
-            builder: (context) => CharacterDetailScreen(characterId: characterId),
-          );
-        }
-        return null;
-      },
+      initialRoute: AppRoutes.home,
+      routes: AppRoutes.getRoutes(),
+      onGenerateRoute: AppRoutes.onGenerateRoute,
     );
   }
 
