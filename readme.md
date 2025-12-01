@@ -17,6 +17,8 @@ This project follows **Clean Architecture** with clear separation of concerns ac
 2. **Domain Layer** - Business logic (entities, use cases, repository contracts)
 3. **Presentation Layer** - UI and state management (BLoC, screens, widgets)
 
+📐 **[View Detailed Architecture Diagrams →](./ARCHITECTURE.md)**
+
 ### Folder Structure
 ```
 lib/
